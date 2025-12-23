@@ -1,0 +1,97 @@
+/* wwwroot/css/site.css */
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-bg: #f3f4f6;
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --sidebar-width: 250px;
+}
+
+body {
+    background-color: var(--secondary-bg);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+}
+
+/* Navbar Styling */
+.navbar-custom {
+    background: var(--primary-gradient);
+    box-shadow: var(--card-shadow);
+}
+
+.navbar-brand, .nav-link {
+    color: white !important;
+    font-weight: 500;
+}
+
+    .nav-link:hover {
+        opacity: 0.8;
+    }
+
+/* Card Styling */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s;
+    background: white;
+    margin-bottom: 20px;
+}
+
+    .card:hover {
+        transform: translateY(-2px);
+    }
+
+.card-header {
+    background: white;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+    color: #4a5568;
+    border-radius: 12px 12px 0 0 !important;
+    padding: 1rem 1.5rem;
+}
+
+/* Stat Cards */
+.stat-card {
+    border-left: 4px solid #667eea;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2d3748;
+}
+
+.stat-label {
+    color: #718096;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+/* Buttons */
+.btn-primary {
+    background: var(--primary-gradient);
+    border: none;
+    box-shadow: 0 4px 6px rgba(102, 126, 234, 0.25);
+}
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #5a6fd6 0%, #6a4292 100%);
+        transform: translateY(-1px);
+    }
+
+/* Badges */
+.badge-stock-ok {
+    background-color: #c6f6d5;
+    color: #22543d;
+}
+
+.badge-stock-low {
+    background-color: #feebc8;
+    color: #744210;
+}
+
+.badge-stock-critical {
+    background-color: #fed7d7;
+    color: #742a2a;
+}

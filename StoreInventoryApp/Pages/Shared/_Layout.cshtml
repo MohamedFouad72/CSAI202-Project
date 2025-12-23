@@ -1,0 +1,108 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Store Inventory</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    @{
+        // Get Session Data
+        var role = HttpContextAccessor.HttpContext?.Session.GetString("UserRole");
+        var userName = HttpContextAccessor.HttpContext?.Session.GetString("UserName");
+        var isLoggedIn = !string.IsNullOrEmpty(role);
+    }
+
+    @if (isLoggedIn)
+    {
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-custom mb-4">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-area="" asp-page="/Dashboard/Index">
+                        <i class="bi bi-shop-window me-2"></i>Store System
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/Dashboard/Index">Dashboard</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/Products/Index">Products</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/Inventory/Index">Inventory</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/Sales/Index">Sales</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/Customers/Index">Customers</a>
+                            </li>
+
+                            @if (role == "Admin" || role == "SubAdmin")
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                        Admin
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-page="/Users/Index">Manage Users</a></li>
+                                        <li><a class="dropdown-item" asp-page="/Suppliers/Index">Suppliers</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" asp-page="/Settings/Index">System Settings</a></li>
+                                    </ul>
+                                </li>
+                            }
+                        </ul>
+
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-person-circle me-1"></i> @userName (@role)
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <form method="post" asp-page="/Auth/Logout" class="d-inline">
+                                            <button type="submit" class="dropdown-item text-danger">
+                                                <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    }
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @if (isLoggedIn)
+    {
+        <footer class="border-top footer text-muted text-center py-3 mt-5">
+            <div class="container">
+                &copy; 2025 - Store Inventory System - Zewail City
+            </div>
+        </footer>
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿@page
+@model StoreInventoryApp.Pages.Inventory.IndexModel
+@using System.Data
+@{
+    ViewData["Title"] = "Inventory Levels";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold">Inventory Management</h2>
+        <p class="text-muted">Real-time stock levels across warehouse and shelves.</p>
+    </div>
+    <div>
+        <a href="#" class="btn btn-outline-secondary me-2"><i class="bi bi-arrow-left-right"></i> Transfer Stock</a>
+        <a href="#" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Adjust Stock</a>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4">Product</th>
+                        <th>Category</th>
+                        <th class="text-center">On Hand (Shelf)</th>
+                        <th class="text-center">Stored (Warehouse)</th>
+                        <th class="text-center">Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DataRow row in Model.InventoryList.Rows)
+                    {
+                        string status = row["StockStatus"].ToString();
+                        string badgeClass = status == "OK" ? "bg-success" : (status == "Low" ? "bg-warning text-dark" : "bg-danger");
+
+                        <tr>
+                            <td class="ps-4 fw-bold">@row["ProductName"]</td>
+                            <td><span class="badge bg-secondary">@row["CategoryName"]</span></td>
+                            <td class="text-center fs-5 fw-bold">@row["QuantityOnHand"]</td>
+                            <td class="text-center text-muted">@row["QuantityStored"]</td>
+                            <td class="text-center">
+                                <span class="badge @badgeClass rounded-pill">@status</span>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-light border" title="View History">
+                                    <i class="bi bi-clock-history"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

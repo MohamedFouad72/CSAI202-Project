@@ -1,0 +1,43 @@
+﻿@page
+@model StoreInventoryApp.Pages.Auth.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Store Inventory Login</h4>
+                </div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                    {
+                        <div class="alert alert-danger">@Model.ErrorMessage</div>
+                    }
+
+                    <form method="post">
+                        <div class="mb-3">
+                            <label>Username</label>
+                            <input type="text" asp-for="UserName" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label>Password</label>
+                            <input type="password" asp-for="Password" class="form-control" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+
+                    <div class="mt-3 text-muted small">
+                        <p>Default Credentials[cite: 1523]:</p>
+                        <ul>
+                            <li>Admin: admin / Admin@123</li>
+                            <li>Pharmacy: pharm_manager / Manager@123</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

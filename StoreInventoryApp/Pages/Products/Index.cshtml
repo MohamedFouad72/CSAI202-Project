@@ -1,0 +1,50 @@
+﻿@page
+@model StoreInventoryApp.Pages.Products.IndexModel
+@using System.Data
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Products</h1>
+    <a asp-page="./Create" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i> Add New
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4">Name</th>
+                        <th>Category</th>
+                        <th>Barcode</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DataRow row in Model.ProductsList.Rows)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-bold">@row["ProductName"]</td>
+                            <td><span class="badge bg-secondary">@row["CategoryName"]</span></td>
+                            <td class="text-muted">@row["Barcode"]</td>
+                            <td class="fw-bold text-success">@Convert.ToDecimal(row["UnitPrice"]).ToString("C")</td>
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@row["ProductID"]" class="btn btn-sm btn-outline-info">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a asp-page="./Edit" asp-route-id="@row["ProductID"]" class="btn btn-sm btn-outline-warning">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
