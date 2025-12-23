@@ -285,3 +285,4 @@ C:\Users\maraw\source\repos\CSAI202-Project\StoreInventoryApp\obj\Debug\net10.0\
 C:\Users\maraw\source\repos\CSAI202-Project\StoreInventoryApp\obj\Debug\net10.0\StoreInventoryApp.pdb
 C:\Users\maraw\source\repos\CSAI202-Project\StoreInventoryApp\obj\Debug\net10.0\StoreInventoryApp.genruntimeconfig.cache
 C:\Users\maraw\source\repos\CSAI202-Project\StoreInventoryApp\obj\Debug\net10.0\ref\StoreInventoryApp.dll
+C:\@Work\Projects\StoreInventoryApp\StoreInventoryApp\obj\Debug\net10.0\StoreInventoryApp.sourcelink.json
