@@ -5,12 +5,32 @@
     ViewData["Title"] = "Products";
 }
 
+<!-- Anti-forgery token present so JS can read it -->
+<form id="__antiForgeryForm" method="post" style="display:none;">
+    @Html.AntiForgeryToken()
+</form>
+
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h1>Products</h1>
+    <div> 
+    <a asp-page="./Deleted" class="btn btn-danger">
+        <i class="bi bi-trash"></i> View Deleted
+    </a>
     <a asp-page="./Create" class="btn btn-primary">
         <i class="bi bi-plus-lg"></i> Add New
     </a>
+    </div>
 </div>
+
+<!-- TempData Alerts -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
 
 <div class="card">
     <div class="card-body p-0">
@@ -26,21 +46,37 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (DataRow row in Model.ProductsList.Rows)
+                    @if (Model.ProductsList != null && Model.ProductsList.Rows.Count > 0)
+                    {
+                        @foreach (DataRow row in Model.ProductsList.Rows)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold">@row["ProductName"]</td>
+                                <td><span class="badge bg-secondary">@row["CategoryName"]</span></td>
+                                <td class="text-muted">@row["Barcode"]</td>
+                                <td class="fw-bold text-success">@Convert.ToDecimal(row["UnitPrice"]).ToString("C")</td>
+                                <td>
+                                    <a asp-page="./Details" asp-route-id="@row["ProductID"]" class="btn btn-sm btn-outline-info">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a asp-page="./Edit" asp-route-id="@row["ProductID"]" class="btn btn-sm btn-outline-warning">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+
+                                    <button class="btn btn-sm btn-outline-danger btn-delete" data-id="@row["ProductID"]">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+
+                                    
+
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
                     {
                         <tr>
-                            <td class="ps-4 fw-bold">@row["ProductName"]</td>
-                            <td><span class="badge bg-secondary">@row["CategoryName"]</span></td>
-                            <td class="text-muted">@row["Barcode"]</td>
-                            <td class="fw-bold text-success">@Convert.ToDecimal(row["UnitPrice"]).ToString("C")</td>
-                            <td>
-                                <a asp-page="./Details" asp-route-id="@row["ProductID"]" class="btn btn-sm btn-outline-info">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                                <a asp-page="./Edit" asp-route-id="@row["ProductID"]" class="btn btn-sm btn-outline-warning">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                            </td>
+                            <td colspan="5" class="text-center">No products found.</td>
                         </tr>
                     }
                 </tbody>
@@ -48,3 +84,44 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.btn-delete').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const productId = this.dataset.id;
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "This product will be marked as deleted!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Create form to POST with anti-forgery token
+                        const tokenInput = document.querySelector('input[name="__RequestVerificationToken"]');
+                        const form = document.createElement('form');
+                        form.method = 'post';
+                        form.action = window.location.pathname + `?handler=Delete&ProductID=${productId}`;
+
+                        if (tokenInput) {
+                            const tokenField = document.createElement('input');
+                            tokenField.type = 'hidden';
+                            tokenField.name = '__RequestVerificationToken';
+                            tokenField.value = tokenInput.value;
+                            form.appendChild(tokenField);
+                        }
+
+                        document.body.appendChild(form);
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
+}
+}

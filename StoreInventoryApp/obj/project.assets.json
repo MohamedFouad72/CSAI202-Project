@@ -1121,23 +1121,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Muhammad Ahmad\\.nuget\\packages\\": {},
+    "C:\\Users\\maraw\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\@Work\\Projects\\StoreInventoryApp\\StoreInventoryApp\\StoreInventoryApp.csproj",
+      "projectUniqueName": "C:\\Users\\maraw\\source\\repos\\CSAI202-Project\\StoreInventoryApp\\StoreInventoryApp.csproj",
       "projectName": "StoreInventoryApp",
-      "projectPath": "C:\\@Work\\Projects\\StoreInventoryApp\\StoreInventoryApp\\StoreInventoryApp.csproj",
-      "packagesPath": "C:\\Users\\Muhammad Ahmad\\.nuget\\packages\\",
-      "outputPath": "C:\\@Work\\Projects\\StoreInventoryApp\\StoreInventoryApp\\obj\\",
+      "projectPath": "C:\\Users\\maraw\\source\\repos\\CSAI202-Project\\StoreInventoryApp\\StoreInventoryApp.csproj",
+      "packagesPath": "C:\\Users\\maraw\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\maraw\\source\\repos\\CSAI202-Project\\StoreInventoryApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Muhammad Ahmad\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\maraw\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

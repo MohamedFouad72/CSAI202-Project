@@ -1,0 +1,261 @@
+﻿@page
+@model StoreInventoryApp.Pages.Inventory.PerformTransactionModel
+@{
+    ViewData["Title"] = "Perform Inventory Transaction";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold">Perform Transaction</h2>
+        <p class="text-muted">Move items from Warehouse (Stored) to Shelf (On Hand).</p>
+    </div>
+    <div>
+        <a asp-page="./Index" class="btn btn-secondary">Back to Inventory</a>
+        <a asp-page="./ViewTransactions" class="btn btn-outline-primary ms-2">
+            <i class="bi bi-list-check me-2"></i>View Transactions
+        </a>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                @Model.ErrorMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i>
+                @Model.SuccessMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (Model.CreatedTransactionId.HasValue)
+        {
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <i class="bi bi-info-circle-fill me-2"></i>
+                Transaction created successfully!
+                <a asp-page="./ViewTransactions" class="alert-link">View all transactions</a>
+            </div>
+        }
+
+        <form method="post" class="row g-3" id="transactionForm">
+            @Html.AntiForgeryToken()
+
+            <div class="col-md-6">
+                <label class="form-label fw-bold">Product <span class="text-danger">*</span></label>
+                <select class="form-select @(ViewData.ModelState["ProductID"]?.Errors.Count > 0 ? "is-invalid" : "")"
+                        asp-for="ProductID" id="productSelect" required>
+                    <option value="">-- Select product --</option>
+                    @if (Model.Products != null && Model.Products.Rows.Count > 0)
+                    {
+                        @foreach (System.Data.DataRow r in Model.Products.Rows)
+                        {
+                            <option value="@r["ProductID"]">
+                                @r["ProductName"] - @r["CategoryName"] (@r["StoreName"])
+                            </option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="" disabled>No products with warehouse stock available</option>
+                    }
+                </select>
+                @if (ViewData.ModelState["ProductID"]?.Errors.Count > 0)
+                {
+                    <div class="invalid-feedback">
+                        @ViewData.ModelState["ProductID"].Errors.First().ErrorMessage
+                    </div>
+                }
+                <div id="storeInfo" class="form-text mt-1"></div>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label fw-bold">Currently on Shelf</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light">
+                        <i class="bi bi-box-seam text-primary"></i>
+                    </span>
+                    <input type="text" id="qtyOnHand" class="form-control" readonly value="0" />
+                    <span class="input-group-text bg-light">units</span>
+                </div>
+                <small class="text-muted">Available for immediate sale</small>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label fw-bold">Currently in Warehouse</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light">
+                        <i class="bi bi-archive text-warning"></i>
+                    </span>
+                    <input type="text" id="qtyStored" class="form-control" readonly value="0" />
+                    <span class="input-group-text bg-light">units</span>
+                </div>
+                <small class="text-muted">In storage, not available for sale</small>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label fw-bold">Quantity to Move <span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light">
+                        <i class="bi bi-arrow-left-right text-success"></i>
+                    </span>
+                    <input type="number" min="1" asp-for="Quantity" id="moveQuantity"
+                           class="form-control @(ViewData.ModelState["Quantity"]?.Errors.Count > 0 ? "is-invalid" : "")"
+                           required value="1" />
+                    <span class="input-group-text bg-light">units</span>
+                </div>
+                <div class="form-text">Maximum: <span id="maxQuantity" class="fw-bold">0</span> units</div>
+                @if (ViewData.ModelState["Quantity"]?.Errors.Count > 0)
+                {
+                    <div class="invalid-feedback d-block">
+                        @ViewData.ModelState["Quantity"].Errors.First().ErrorMessage
+                    </div>
+                }
+            </div>
+
+            <div class="col-md-8">
+                <label class="form-label fw-bold">Notes (Optional)</label>
+                <textarea asp-for="Notes" class="form-control" rows="2"
+                          placeholder="Optional notes about this transaction"></textarea>
+            </div>
+
+            <div class="col-12">
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary" id="moveButton">
+                        <i class="bi bi-arrow-right-circle me-2"></i>Move to Shelf
+                    </button>
+                    <a asp-page="./Index" class="btn btn-outline-secondary">
+                        <i class="bi bi-x-circle me-2"></i>Cancel
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const productSelect = document.getElementById('productSelect');
+            const qtyOnHand = document.getElementById('qtyOnHand');
+            const qtyStored = document.getElementById('qtyStored');
+            const moveQuantity = document.getElementById('moveQuantity');
+            const maxQuantitySpan = document.getElementById('maxQuantity');
+            const storeInfo = document.getElementById('storeInfo');
+
+            function updateQuantities(productId) {
+                if (!productId) {
+                    qtyOnHand.value = '0';
+                    qtyStored.value = '0';
+                    moveQuantity.max = 0;
+                    maxQuantitySpan.textContent = '0';
+                    moveQuantity.value = '1';
+                    storeInfo.textContent = '';
+                    return;
+                }
+
+                // Show loading state
+                qtyOnHand.value = 'Loading...';
+                qtyStored.value = 'Loading...';
+                moveQuantity.max = 0;
+                maxQuantitySpan.textContent = 'Loading...';
+
+                fetch(`/Inventory/PerformTransaction?handler=GetQuantities&productId=${productId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log('API Response:', data);
+
+                        if (data.success) {
+                            const onHand = data.quantityOnHand || 0;
+                            const stored = data.quantityStored || 0;
+                            const storeName = data.storeName || 'Unknown Store';
+
+                            qtyOnHand.value = onHand;
+                            qtyStored.value = stored;
+                            moveQuantity.max = stored;
+                            maxQuantitySpan.textContent = stored;
+
+                            // Show store info
+                            storeInfo.innerHTML = `<i class="bi bi-shop"></i> Store: ${storeName}`;
+
+                            // Auto-set quantity to 1 if current value is 0 or exceeds max
+                            const currentQty = parseInt(moveQuantity.value) || 1;
+                            if (currentQty > stored) {
+                                moveQuantity.value = stored > 0 ? '1' : '0';
+                            }
+                        } else {
+                            qtyOnHand.value = '0';
+                            qtyStored.value = '0';
+                            moveQuantity.max = 0;
+                            maxQuantitySpan.textContent = '0';
+                            moveQuantity.value = '0';
+                            storeInfo.innerHTML = `<i class="bi bi-exclamation-triangle text-danger"></i> No inventory found`;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        qtyOnHand.value = 'Error';
+                        qtyStored.value = 'Error';
+                        moveQuantity.max = 0;
+                        maxQuantitySpan.textContent = '0';
+                        moveQuantity.value = '0';
+                        storeInfo.innerHTML = `<i class="bi bi-exclamation-triangle text-danger"></i> Error loading data`;
+                    });
+            }
+
+            productSelect.addEventListener('change', function () {
+                updateQuantities(this.value);
+            });
+
+            moveQuantity.addEventListener('input', function () {
+                const max = parseInt(this.max) || 0;
+                const value = parseInt(this.value) || 0;
+
+                if (value > max) {
+                    this.value = max;
+                } else if (value < 1 && max > 0) {
+                    this.value = 1;
+                }
+            });
+
+            // Initialize if there's a selected product
+            if (productSelect.value) {
+                updateQuantities(productSelect.value);
+            }
+
+            // Form submission validation
+            document.getElementById('transactionForm').addEventListener('submit', function (e) {
+                const selectedProduct = productSelect.value;
+                const quantity = parseInt(moveQuantity.value) || 0;
+                const maxQty = parseInt(moveQuantity.max) || 0;
+
+                if (!selectedProduct) {
+                    e.preventDefault();
+                    alert('Please select a product.');
+                    productSelect.focus();
+                    return;
+                }
+
+                if (quantity <= 0) {
+                    e.preventDefault();
+                    alert('Quantity must be at least 1.');
+                    moveQuantity.focus();
+                    return;
+                }
+
+                if (quantity > maxQty) {
+                    e.preventDefault();
+                    alert(`Quantity exceeds available stock in warehouse. Maximum: ${maxQty}`);
+                    moveQuantity.focus();
+                    return;
+                }
+            });
+        });
+    </script>
+}

@@ -1,7 +1,13 @@
+using StoreInventoryApp.Helpers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// Register DbHelper as a singleton or scoped service
+builder.Services.AddScoped<DbHelper>();
+
 
 builder.Services.AddHttpContextAccessor();
 

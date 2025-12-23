@@ -12,6 +12,12 @@ namespace StoreInventoryApp.Helpers
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
+        // Add this method to get the connection string
+        public string GetConnectionString()
+        {
+            return _connectionString;
+        }
+
         // Execute a query that returns a DataTable (SELECT)
         public DataTable ExecuteQuery(string query, SqlParameter[]? parameters = null)
         {

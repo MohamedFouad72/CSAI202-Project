@@ -11,73 +11,101 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = StoreInventoryApp
 build_property.RootNamespace = StoreInventoryApp
-build_property.ProjectDir = C:\@Work\Projects\StoreInventoryApp\StoreInventoryApp\
+build_property.ProjectDir = C:\Users\maraw\source\repos\CSAI202-Project\StoreInventoryApp\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\@Work\Projects\StoreInventoryApp\StoreInventoryApp
+build_property.MSBuildProjectDirectory = C:\Users\maraw\source\repos\CSAI202-Project\StoreInventoryApp
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/@Work/Projects/StoreInventoryApp/StoreInventoryApp/Pages/Auth/Login.cshtml]
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Auth/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/@Work/Projects/StoreInventoryApp/StoreInventoryApp/Pages/Auth/Logout.cshtml]
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Auth/Logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxMb2dvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/@Work/Projects/StoreInventoryApp/StoreInventoryApp/Pages/Customers/Index.cshtml]
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Customers/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3VzdG9tZXJzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/@Work/Projects/StoreInventoryApp/StoreInventoryApp/Pages/Dashboard/Index.cshtml]
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Dashboard/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/@Work/Projects/StoreInventoryApp/StoreInventoryApp/Pages/Error.cshtml]
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/@Work/Projects/StoreInventoryApp/StoreInventoryApp/Pages/Index.cshtml]
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/@Work/Projects/StoreInventoryApp/StoreInventoryApp/Pages/Inventory/Index.cshtml]
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Inventory/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50b3J5XEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Inventory/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50b3J5XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/@Work/Projects/StoreInventoryApp/StoreInventoryApp/Pages/Privacy.cshtml]
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Inventory/PerformTransaction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50b3J5XFBlcmZvcm1UcmFuc2FjdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Inventory/Transactions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50b3J5XFRyYW5zYWN0aW9ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/@Work/Projects/StoreInventoryApp/StoreInventoryApp/Pages/Products/Index.cshtml]
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Products/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Products/Deleted.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdHNcRGVsZXRlZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Products/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Products/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Products/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/@Work/Projects/StoreInventoryApp/StoreInventoryApp/Pages/Sales/Create.cshtml]
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Sales/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/@Work/Projects/StoreInventoryApp/StoreInventoryApp/Pages/Sales/Index.cshtml]
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Sales/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/@Work/Projects/StoreInventoryApp/StoreInventoryApp/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/@Work/Projects/StoreInventoryApp/StoreInventoryApp/Pages/_ViewImports.cshtml]
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/@Work/Projects/StoreInventoryApp/StoreInventoryApp/Pages/_ViewStart.cshtml]
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/@Work/Projects/StoreInventoryApp/StoreInventoryApp/Pages/Shared/_Layout.cshtml]
+[C:/Users/maraw/source/repos/CSAI202-Project/StoreInventoryApp/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-6i0t1slats
