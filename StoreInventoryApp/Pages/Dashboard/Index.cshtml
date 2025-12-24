@@ -94,6 +94,9 @@
                 <a asp-page="/Products/Create" class="list-group-item list-group-item-action">
                     <i class="bi bi-plus-circle me-2 text-primary"></i> Add Product
                 </a>
+                <a asp-page="/Purchases/Create" class="list-group-item list-group-item-action">
+                    <i class="bi bi-plus-circle me-2 text-primary"></i> Add Purchase
+                </a>
                 <a asp-page="/Inventory/Index" class="list-group-item list-group-item-action">
                     <i class="bi bi-boxes me-2 text-success"></i> Check Stock
                 </a>
@@ -101,6 +104,40 @@
                     <i class="bi bi-person-plus me-2 text-info"></i> New Customer
                 </a>
             </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">
+                <i class="bi bi-building"></i> Suppliers
+            </h5>
+            <p class="card-text">Manage supplier information and contacts</p>
+            <a asp-page="/Suppliers/Index" class="btn btn-primary">View Suppliers</a>
+            <a asp-page="/Suppliers/Create" class="btn btn-success">Add Supplier</a>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">
+                <i class="bi bi-cart-plus"></i> Purchase Orders
+            </h5>
+            <p class="card-text">Create purchase orders from suppliers</p>
+            <a asp-page="/Purchases/Create" class="btn btn-primary">New Purchase Order</a>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">
+                <i class="bi bi-archive"></i> Batch Management
+            </h5>
+            <p class="card-text">Track product batches and expiry dates (FEFO)</p>
+            <a asp-page="/Batches/Index" class="btn btn-primary">View Batches</a>
         </div>
     </div>
 </div>

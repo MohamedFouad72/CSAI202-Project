@@ -1,0 +1,229 @@
+﻿@page
+@model StoreInventoryApp.Pages.Batches.IndexModel
+@{
+    ViewData["Title"] = "Batch Management";
+}
+
+<div class="container mt-4">
+    <h2>Batch Management</h2>
+    <p class="text-muted">Track product batches, expiry dates, and FEFO (First Expiry First Out) inventory</p>
+    <hr />
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Expiring Soon Alert -->
+    @if (Model.ExpiringSoonCount > 0)
+    {
+        <div class="alert alert-warning" role="alert">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <strong>Warning:</strong> @Model.ExpiringSoonCount batch(es) expiring within 30 days!
+        </div>
+    }
+
+    <!-- Filters -->
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Filters</h5>
+            <form method="get" class="row g-3">
+                <div class="col-md-3">
+                    <label for="productFilter" class="form-label">Product</label>
+                    <select name="productId" id="productFilter" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Products</option>
+                        @foreach (var product in Model.Products)
+                        {
+                            <option value="@product.ProductID" selected="@(Model.FilterProductId == product.ProductID)">
+                                @product.ProductName
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="storeFilter" class="form-label">Store</label>
+                    <select name="storeId" id="storeFilter" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Stores</option>
+                        @foreach (var store in Model.Stores)
+                        {
+                            <option value="@store.StoreID" selected="@(Model.FilterStoreId == store.StoreID)">
+                                @store.StoreName
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="statusFilter" class="form-label">Status</label>
+                    <select name="status" id="statusFilter" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Status</option>
+                        <option value="Active" selected="@(Model.FilterStatus == "Active")">Active</option>
+                        <option value="Expired" selected="@(Model.FilterStatus == "Expired")">Expired</option>
+                        <option value="Depleted" selected="@(Model.FilterStatus == "Depleted")">Depleted</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">&nbsp;</label>
+                    <a href="@Url.Page("Index")" class="btn btn-secondary w-100">
+                        <i class="bi bi-x-circle"></i> Clear Filters
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Batches Table -->
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Batch Number</th>
+                            <th>Product</th>
+                            <th>Store</th>
+                            <th>Received Qty</th>
+                            <th>Remaining Qty</th>
+                            <th>Production Date</th>
+                            <th>Expiry Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Batches != null && Model.Batches.Count > 0)
+                        {
+                            @foreach (var batch in Model.Batches)
+                            {
+                                var rowClass = "";
+                                var daysUntilExpiry = 0;
+
+                                if (batch.ExpiryDate.HasValue)
+                                {
+                                    daysUntilExpiry = (batch.ExpiryDate.Value - DateTime.Now).Days;
+                                    if (daysUntilExpiry < 0)
+                                        rowClass = "table-danger";
+                                    else if (daysUntilExpiry <= 30)
+                                        rowClass = "table-warning";
+                                }
+
+                                <tr class="@rowClass">
+                                    <td><strong>@batch.BatchNumber</strong></td>
+                                    <td>@batch.ProductName</td>
+                                    <td>@batch.StoreName</td>
+                                    <td>@batch.ReceivedQuantity</td>
+                                    <td>
+                                        <strong>@batch.RemainingQuantity</strong>
+                                        @if (batch.RemainingQuantity == 0)
+                                        {
+                                            <span class="badge bg-secondary ms-1">Empty</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (batch.ProductionDate.HasValue)
+                                        {
+                                            @batch.ProductionDate.Value.ToString("MMM dd, yyyy")
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">N/A</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (batch.ExpiryDate.HasValue)
+                                        {
+                                            @batch.ExpiryDate.Value.ToString("MMM dd, yyyy")
+
+                                            @if (daysUntilExpiry < 0)
+                                            {
+                                                <br />
+
+                                                <span class="badge bg-danger">Expired</span>
+                                            }
+                                            else if (daysUntilExpiry <= 30)
+                                            {
+                                                <br />
+
+                                                <span class="badge bg-warning text-dark">@daysUntilExpiry days left</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">N/A</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (batch.Status == "Active")
+                                        {
+                                            <span class="badge bg-success">Active</span>
+                                        }
+                                        else if (batch.Status == "Expired")
+                                        {
+                                            <span class="badge bg-danger">Expired</span>
+                                        }
+                                        else if (batch.Status == "Depleted")
+                                        {
+                                            <span class="badge bg-secondary">Depleted</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-info">@batch.Status</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (batch.Status == "Active" && batch.ExpiryDate.HasValue && daysUntilExpiry < 0)
+                                        {
+                                            <form method="post" class="d-inline" asp-page-handler="MarkExpired">
+                                                <input type="hidden" name="batchId" value="@batch.BatchID" />
+                                                <button type="submit" class="btn btn-sm btn-danger"
+                                                        onclick="return confirm('Mark this batch as expired?')">
+                                                    Mark Expired
+                                                </button>
+                                            </form>
+                                        }
+                                        @if (batch.Status == "Active" && batch.RemainingQuantity == 0)
+                                        {
+                                            <form method="post" class="d-inline" asp-page-handler="MarkDepleted">
+                                                <input type="hidden" name="batchId" value="@batch.BatchID" />
+                                                <button type="submit" class="btn btn-sm btn-secondary"
+                                                        onclick="return confirm('Mark this batch as depleted?')">
+                                                    Mark Depleted
+                                                </button>
+                                            </form>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="9" class="text-center text-muted">No batches found</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="card mt-3">
+        <div class="card-body">
+            <h6 class="card-title">Color Legend:</h6>
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="badge bg-danger">Red Row</span> = Expired batch
+                </div>
+                <div class="col-md-4">
+                    <span class="badge bg-warning text-dark">Yellow Row</span> = Expiring within 30 days
+                </div>
+                <div class="col-md-4">
+                    <span class="badge bg-light text-dark">White Row</span> = Normal batch
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

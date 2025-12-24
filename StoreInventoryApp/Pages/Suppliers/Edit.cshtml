@@ -1,0 +1,31 @@
+﻿@page
+@model StoreInventoryApp.Pages.Suppliers.EditModel
+
+<h2>Edit Supplier</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Supplier.SupplierID" />
+
+    <label>Name</label>
+    <input asp-for="Supplier.SupplierName" />
+    <br />
+
+    <label>Email</label>
+    <input asp-for="Supplier.SupplierEmail" />
+    <br />
+
+    <label>Phone</label>
+    <input asp-for="Supplier.SupplierPhone" />
+    <br />
+
+    <label>Address</label>
+    <input asp-for="Supplier.SupplierAddress" />
+    <br />
+
+    <label>SSN</label>
+    <input asp-for="Supplier.SSN" />
+    <br />
+
+    <button type="submit">Update</button>
+    <a href="/Suppliers">Cancel</a>
+</form>
