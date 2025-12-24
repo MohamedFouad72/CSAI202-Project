@@ -1,0 +1,427 @@
+@@page
+@model StoreInventoryApp.Pages.Reports.InventoryReportModel
+@{
+    ViewData["Title"] = "Inventory Report";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .report-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .filter-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .data-table {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        .table thead th {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            font-weight: 600;
+            padding: 1rem;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .status-ok { background: #d1fae5; color: #065f46; }
+        .status-low { background: #fef3c7; color: #92400e; }
+        .status-critical { background: #fee2e2; color: #991b1b; }
+        .status-out { background: #e5e7eb; color: #374151; }
+
+        .print-btn {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+         print {
+            .no-print { display: none !important; }
+            body { background: white; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid py-4">
+        <!-- Header -->
+        <div class="report-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="mb-2"><i class="bi bi-box-seam-fill me-2"></i>Inventory Report</h1>
+                    <p class="mb-0 opacity-75">Current stock levels and inventory valuation</p>
+                </div>
+                <div class="no-print">
+                    <button class="print-btn" onclick="window.print()">
+                        <i class="bi bi-printer me-2"></i>Print Report
+                    </button>
+                    <a asp-page="/Dashboard/Index" class="btn btn-light ms-2">
+                        <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-card no-print">
+            <form method="post">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">
+                            <i class="bi bi-shop me-1"></i>Store
+                        </label>
+                        <select class="form-select" asp-for="StoreID">
+                            <option value="">All Stores</option>
+                            @if (Model.Stores != null)
+                            {
+                                @foreach (var store in Model.Stores)
+                                {
+                                    <option value="@store.StoreID">@store.StoreName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">
+                            <i class="bi bi-tag me-1"></i>Category
+                        </label>
+                        <select class="form-select" asp-for="CategoryID">
+                            <option value="">All Categories</option>
+                            @if (Model.Categories != null)
+                            {
+                                @foreach (var cat in Model.Categories)
+                                {
+                                    <option value="@cat.CategoryID">@cat.CategoryName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">
+                            <i class="bi bi-filter me-1"></i>Stock Status
+                        </label>
+                        <select class="form-select" asp-for="StockStatus">
+                            <option value="All">All Status</option>
+                            <option value="OK">OK (Above Reorder)</option>
+                            <option value="Low">Low Stock</option>
+                            <option value="Critical">Critical Stock</option>
+                            <option value="OutOfStock">Out of Stock</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100" style="background: var(--primary-gradient); border: none;">
+                            <i class="bi bi-search me-2"></i>Generate Report
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        @if (Model.ReportGenerated)
+        {
+            <!-- Summary Statistics -->
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white;">
+                            <i class="bi bi-boxes"></i>
+                        </div>
+                        <div class="stat-value text-primary">@Model.TotalProducts</div>
+                        <div class="stat-label">Total Products</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white;">
+                            <i class="bi bi-currency-dollar"></i>
+                        </div>
+                        <div class="stat-value text-success">@Model.TotalInventoryValue.ToString("N2")</div>
+                        <div class="stat-label">Inventory Value (EGP)</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white;">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                        </div>
+                        <div class="stat-value text-warning">@Model.LowStockCount</div>
+                        <div class="stat-label">Low Stock Items</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white;">
+                            <i class="bi bi-x-circle-fill"></i>
+                        </div>
+                        <div class="stat-value text-danger">@Model.OutOfStockCount</div>
+                        <div class="stat-label">Out of Stock</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Breakdown Chart -->
+            <div class="chart-container">
+                <h5 class="mb-4"><i class="bi bi-pie-chart-fill me-2"></i>Inventory Value by Category</h5>
+                <canvas id="categoryChart"></canvas>
+            </div>
+
+            <!-- Category Breakdown Table -->
+            <div class="data-table mb-4">
+                <h5 class="mb-4"><i class="bi bi-grid-3x3-gap-fill me-2"></i>Category Breakdown</h5>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Products</th>
+                            <th>Total Quantity</th>
+                            <th>Total Value</th>
+                            <th>Low Stock Items</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.CategoryBreakdown != null)
+                        {
+                            @foreach (var cat in Model.CategoryBreakdown)
+                            {
+                                <tr>
+                                    <td><strong>@cat.CategoryName</strong></td>
+                                    <td>@cat.ProductCount</td>
+                                    <td>@cat.TotalQuantity units</td>
+                                    <td><span class="text-success fw-bold">@cat.TotalValue.ToString("N2") EGP</span></td>
+                                    <td>
+                                        @if (cat.LowStockCount > 0)
+                                        {
+                                            <span class="badge bg-warning text-dark">@cat.LowStockCount items</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success">All OK</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Inventory Items Table -->
+            <div class="data-table">
+                <h5 class="mb-4"><i class="bi bi-list-ul me-2"></i>Inventory Details (@Model.InventoryItems?.Count ?? 0 items)</h5>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Store</th>
+                            <th>On Hand</th>
+                            <th>Stored</th>
+                            <th>Reorder Level</th>
+                            <th>Unit Price</th>
+                            <th>Total Value</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.InventoryItems != null)
+                        {
+                            @foreach (var item in Model.InventoryItems)
+                            {
+                                <tr>
+                                    <td><strong>@item.ProductName</strong></td>
+                                    <td><span class="badge bg-info">@item.CategoryName</span></td>
+                                    <td>@item.StoreName</td>
+                                    <td>@item.QuantityOnHand</td>
+                                    <td>@item.QuantityStored</td>
+                                    <td>@item.ReorderLevel</td>
+                                    <td>@item.UnitPrice.ToString("N2") EGP</td>
+                                    <td><span class="text-success fw-bold">@item.TotalValue.ToString("N2") EGP</span></td>
+                                    <td>
+                                        @{
+                                            var statusClass = item.StockStatus switch
+                                            {
+                                                "OK" => "status-ok",
+                                                "Low" => "status-low",
+                                                "Critical" => "status-critical",
+                                                "Out of Stock" => "status-out",
+                                                _ => "status-ok"
+                                            };
+                                        }
+                                        <span class="status-badge @statusClass">@item.StockStatus</span>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Report Footer -->
+            <div class="text-center mt-4 text-muted">
+                <small>Report generated on @DateTime.Now.ToString("dddd, MMMM dd, yyyy 'at' hh:mm tt")</small>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info text-center" role="alert">
+                <i class="bi bi-info-circle me-2"></i>
+                <strong>No Data to Display</strong> - Please select filters and click "Generate Report" to view inventory details.
+            </div>
+        }
+    </div>
+
+    <script>
+        @if (Model.ReportGenerated && Model.CategoryBreakdown != null && Model.CategoryBreakdown.Any())
+        {
+            <text>
+            // Category Pie Chart
+            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+            new Chart(categoryCtx, {
+                type: 'pie',
+                data: {
+                    labels: [@Html.Raw(string.Join(",", Model.CategoryBreakdown.Select(c => $"'{c.CategoryName}'")))],
+                    datasets: [{
+                        data: [@Html.Raw(string.Join(",", Model.CategoryBreakdown.Select(c => c.TotalValue)))],
+                        backgroundColor: [
+                            'rgba(102, 126, 234, 0.8)',
+                            'rgba(118, 75, 162, 0.8)',
+                            'rgba(16, 185, 129, 0.8)',
+                            'rgba(245, 158, 11, 0.8)',
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(168, 85, 247, 0.8)',
+                            'rgba(34, 197, 94, 0.8)'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                padding: 15,
+                                font: { size: 12, weight: 'bold' }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.parsed.toFixed(2) + ' EGP';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            </text>
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

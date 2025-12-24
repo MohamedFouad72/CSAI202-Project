@@ -7,7 +7,7 @@ namespace StoreInventoryApp.Pages.Customers
     public class IndexModel : PageModel
     {
         private readonly DbHelper _db;
-        public DataTable CustomerList { get; set; }
+        public DataTable CustomerList { get; set; } = new();
 
         public IndexModel(IConfiguration config)
         {

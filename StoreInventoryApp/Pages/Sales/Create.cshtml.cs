@@ -7,8 +7,8 @@ namespace StoreInventoryApp.Pages.Sales
     public class CreateModel : PageModel
     {
         private readonly DbHelper _db;
-        public DataTable ProductsList { get; set; }
-        public DataTable CustomersList { get; set; }
+        public DataTable ProductsList { get; set; } = new();
+        public DataTable CustomersList { get; set; } = new();
 
         public CreateModel(IConfiguration config)
         {

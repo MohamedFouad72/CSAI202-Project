@@ -40,7 +40,7 @@
                             <td class="ps-4 fw-bold">@row["ProductName"]</td>
                             <td><span class="badge bg-secondary">@row["CategoryName"]</span></td>
                             <td class="text-center fs-5 fw-bold">@row["QuantityOnHand"]</td>
-                            <td class="text-center text-muted">@row["QuantityStored"]</td>
+                            <td class="text-center text-muted">@(row["QuantityStored"]?.ToString() ?? "0")</td>
                             <td class="text-center">
                                 <span class="badge @badgeClass rounded-pill">@status</span>
                             </td>

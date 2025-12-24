@@ -7,7 +7,7 @@ namespace StoreInventoryApp.Pages.Sales
     public class IndexModel : PageModel
     {
         private readonly DbHelper _db;
-        public DataTable InvoicesList { get; set; }
+        public DataTable InvoicesList { get; set; } = new();
 
         public IndexModel(IConfiguration config)
         {
@@ -16,7 +16,6 @@ namespace StoreInventoryApp.Pages.Sales
 
         public void OnGet()
         {
-            // Query: Get Sales Invoices with User and Customer names
             string query = @"
                 SELECT inv.InvoiceID, inv.InvoiceNumber, inv.InvoiceDate, 
                        inv.TotalAmount, inv.PaymentMethod,

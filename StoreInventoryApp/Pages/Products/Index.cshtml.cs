@@ -7,7 +7,7 @@ namespace StoreInventoryApp.Pages.Products
     public class IndexModel : PageModel
     {
         private readonly DbHelper _db;
-        public DataTable ProductsList { get; set; }
+        public DataTable ProductsList { get; set; } = new DataTable();
 
         public IndexModel(IConfiguration config)
         {

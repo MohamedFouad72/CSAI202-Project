@@ -7,65 +7,71 @@ namespace StoreInventoryApp.Helpers
     {
         private readonly string _connectionString;
 
-        public DbHelper(IConfiguration configuration)
+        public DbHelper(IConfiguration config)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            var connString = config.GetConnectionString("DefaultConnection");
+            
+            if (string.IsNullOrEmpty(connString))
+            {
+                throw new InvalidOperationException("Connection string 'DefaultConnection' not found in configuration.");
+            }
+            
+            _connectionString = connString;
         }
 
-        // Execute a query that returns a DataTable (SELECT)
         public DataTable ExecuteQuery(string query, SqlParameter[]? parameters = null)
         {
-            DataTable dt = new DataTable();
-            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            
+            using var command = new SqlCommand(query, connection);
+            
+            if (parameters != null)
             {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    if (parameters != null)
-                    {
-                        cmd.Parameters.AddRange(parameters);
-                    }
-                    conn.Open();
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
-                    {
-                        adapter.Fill(dt);
-                    }
-                }
+                command.Parameters.AddRange(parameters);
             }
-            return dt;
+            
+            using var adapter = new SqlDataAdapter(command);
+            var dataTable = new DataTable();
+            adapter.Fill(dataTable);
+            
+            return dataTable;
         }
 
-        // Execute a command that returns void or rows affected (INSERT, UPDATE, DELETE)
-        public int ExecuteNonQuery(string query, SqlParameter[]? parameters = null)
-        {
-            using (SqlConnection conn = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    if (parameters != null)
-                    {
-                        cmd.Parameters.AddRange(parameters);
-                    }
-                    conn.Open();
-                    return cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-        // Execute scalar (for getting single values like UserID after insert)
         public object? ExecuteScalar(string query, SqlParameter[]? parameters = null)
         {
-            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            
+            using var command = new SqlCommand(query, connection);
+            
+            if (parameters != null)
             {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    if (parameters != null)
-                    {
-                        cmd.Parameters.AddRange(parameters);
-                    }
-                    conn.Open();
-                    return cmd.ExecuteScalar();
-                }
+                command.Parameters.AddRange(parameters);
             }
+            
+            return command.ExecuteScalar();
+        }
+
+        public int ExecuteNonQuery(string query, SqlParameter[]? parameters = null)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            
+            using var command = new SqlCommand(query, connection);
+            
+            if (parameters != null)
+            {
+                command.Parameters.AddRange(parameters);
+            }
+            
+            return command.ExecuteNonQuery();
+        }
+
+        // طريقة للمعاملات
+        public SqlConnection GetConnection()
+        {
+            return new SqlConnection(_connectionString);
         }
     }
 }
