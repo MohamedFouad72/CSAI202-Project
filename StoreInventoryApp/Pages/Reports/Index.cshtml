@@ -1,0 +1,85 @@
+@page
+@model StoreInventoryApp.Pages.Reports.IndexModel
+@{
+    ViewData["Title"] = "Reports Dashboard";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4><i class="bi bi-graph-up me-2"></i>Reports Dashboard</h4>
+                    <p class="mb-0">Choose a report to generate</p>
+                </div>
+                
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Inventory Report -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <div class="mb-3">
+                                        <i class="bi bi-box-seam display-4 text-primary"></i>
+                                    </div>
+                                    <h5>Inventory Report</h5>
+                                    <p class="text-muted">Current stock levels and valuation</p>
+                                    <a asp-page="./Inventory" class="btn btn-primary btn-sm">
+                                        <i class="bi bi-arrow-right-circle me-1"></i> Open
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sales Report (سيتم إنشاؤه لاحقاً) -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <div class="mb-3">
+                                        <i class="bi bi-cash-coin display-4 text-success"></i>
+                                    </div>
+                                    <h5>Sales Report</h5>
+                                    <p class="text-muted">Daily, weekly, and monthly sales</p>
+                                    <button class="btn btn-secondary btn-sm" disabled>
+                                        <i class="bi bi-clock me-1"></i> Coming Soon
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Profit Report -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <div class="mb-3">
+                                        <i class="bi bi-pie-chart display-4 text-warning"></i>
+                                    </div>
+                                    <h5>Profit Analysis</h5>
+                                    <p class="text-muted">Profit margins and analysis</p>
+                                    <button class="btn btn-secondary btn-sm" disabled>
+                                        <i class="bi bi-clock me-1"></i> Coming Soon
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Stats -->
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <div class="alert alert-info">
+                                <h6><i class="bi bi-info-circle me-2"></i>How to Generate Reports:</h6>
+                                <ol class="mb-0">
+                                    <li>Click on "Inventory Report" above</li>
+                                    <li>Use filters to customize the report</li>
+                                    <li>Click "Generate Report" button</li>
+                                    <li>Use "Print Report" for hard copies</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

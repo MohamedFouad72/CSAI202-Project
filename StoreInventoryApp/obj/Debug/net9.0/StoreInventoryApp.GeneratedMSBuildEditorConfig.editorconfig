@@ -28,12 +28,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxMb2dvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Customers/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3VzdG9tZXJzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Customers/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3VzdG9tZXJzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Customers/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3VzdG9tZXJzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Dashboard/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Deliveries/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVsaXZlcmllc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Error.cshtml]
@@ -44,20 +56,56 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Inventory/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50b3J5XEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Inventory/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50b3J5XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Inventory/PerformTransaction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50b3J5XFBlcmZvcm1UcmFuc2FjdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Inventory/Transactions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50b3J5XFRyYW5zYWN0aW9ucy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Products/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Products/Deleted.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdHNcRGVsZXRlZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Products/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Products/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Products/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Reports/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVwb3J0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Reports/Inventory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVwb3J0c1xJbnZlbnRvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Returns/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmV0dXJuc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Sales/Create.cshtml]
@@ -66,6 +114,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Sales/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Settings/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2V0dGluZ3NcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Shared/_ValidationScriptsPartial.cshtml]
@@ -90,6 +142,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/ِAlerts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNc2ZBBbGVydHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/ahmed/Desktop/CSAI 202/CSAI202-Project/StoreInventoryApp/Pages/Shared/_Layout.cshtml]

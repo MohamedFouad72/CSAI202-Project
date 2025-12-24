@@ -1,0 +1,50 @@
+﻿@page "{id:int}"
+@model StoreInventoryApp.Pages.Products.DetailsModel
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-light">
+            <h4 class="mb-0">Product Details</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <strong>Product ID:</strong> @Model.ProductID
+                </div>
+                <div class="col-md-6 mb-3">
+                    <strong>Product Name:</strong> @Model.ProductName
+                </div>
+                <div class="col-md-6 mb-3">
+                    <strong>Barcode:</strong> @Model.Barcode
+                </div>
+                <div class="col-md-6 mb-3">
+                    <strong>Category:</strong> @Model.CategoryName
+                </div>
+                <div class="col-md-6 mb-3">
+                    <strong>Manufacturer:</strong> @Model.Manufacturer
+                </div>
+                <div class="col-md-6 mb-3">
+                    <strong>Unit Cost:</strong> @Model.UnitCost.ToString("C")
+                </div>
+                <div class="col-md-6 mb-3">
+                    <strong>Unit Price:</strong> @Model.UnitPrice.ToString("C")
+                </div>
+                <div class="col-md-6 mb-3">
+                    <strong>Reorder Level:</strong> @Model.ReorderLevel
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-3">
+                <a asp-page="./Edit" asp-route-id="@Model.ProductID" class="btn btn-warning">
+                    <i class="bi bi-pencil"></i> Edit
+                </a>
+                <a asp-page="./Index" class="btn btn-secondary">
+                    <i class="bi bi-x-circle"></i> Back
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

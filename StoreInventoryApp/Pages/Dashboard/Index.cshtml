@@ -56,7 +56,7 @@
                     <div class="stat-label text-success">Customers</div>
                     <i class="bi bi-people text-success fs-4"></i>
                 </div>
-                <div class="stat-value">@Model.CustomerCount</div>
+                <div class="stat-value">@Model.ActiveCustomers</div>
                 <div class="text-muted small mt-2">
                     <a asp-page="/Customers/Index" class="text-success text-decoration-none">Active Profiles</a>
                 </div>
@@ -72,7 +72,7 @@
                     <div class="stat-label text-warning">Sales Today</div>
                     <i class="bi bi-currency-dollar text-warning fs-4"></i>
                 </div>
-                <div class="stat-value">@Model.TodaySalesCount</div>
+                <div class="stat-value">@Model.DailySalesCount</div>
                 <div class="text-muted small mt-2">
                     <a asp-page="/Sales/Index" class="text-warning text-decoration-none">Invoices Generated</a>
                 </div>
@@ -90,59 +90,38 @@
                 <a asp-page="/Sales/Index" class="btn btn-sm btn-outline-secondary">View All</a>
             </div>
             <div class="card-body p-0">
-                @if (Model.RecentSales.Any())
-                {
-                    <div class="list-group list-group-flush">
-                        @foreach (var sale in Model.RecentSales)
-                        {
-                            <div class="list-group-item">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <div class="fw-bold">Sale #@sale.InvoiceNumber</div>
-                                        <small class="text-muted">@sale.CustomerName • @sale.InvoiceDate.ToString("hh:mm tt")</small>
-                                    </div>
-                                    <div class="text-success fw-bold">@sale.TotalAmount.ToString("C")</div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                }
-                else
-                {
-                    <p class="text-center text-muted py-5">
-                        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
-                        No recent transactions found.
-                    </p>
-                }
+                <div class="text-center text-muted py-5">
+                    <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                    No recent transactions found.
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Quick Actions -->
-    <<!-- Quick Actions -->
-<div class="col-md-4">
-    <div class="card h-100">
-        <div class="card-header">
-            <i class="bi bi-lightning-charge me-2"></i>Quick Actions
-        </div>
-        <div class="list-group list-group-flush">
-            <!-- تأكد أن كل رابط يبدأ بـ asp-page -->
-            <a asp-page="/Products/Create" class="list-group-item list-group-item-action">
-                <i class="bi bi-plus-circle me-2 text-primary"></i> Add Product
-            </a>
-            <a asp-page="/Inventory/Index" class="list-group-item list-group-item-action">
-                <i class="bi bi-boxes me-2 text-success"></i> Check Stock
-            </a>
-            <a asp-page="/Customers/Create" class="list-group-item list-group-item-action">
-                <i class="bi bi-person-plus me-2 text-info"></i> New Customer
-            </a>
-            <!-- هذا الرابط للـ Reports -->
-            <a asp-page="/Reports/Inventory" class="list-group-item list-group-item-action">
-                <i class="bi bi-graph-up me-2 text-warning"></i> View Reports
-            </a>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <i class="bi bi-lightning-charge me-2"></i>Quick Actions
+            </div>
+            <div class="list-group list-group-flush">
+                <a asp-page="/Products/Create" class="list-group-item list-group-item-action">
+                    <i class="bi bi-plus-circle me-2 text-primary"></i> Add Product
+                </a>
+                <a asp-page="/Inventory/Index" class="list-group-item list-group-item-action">
+                    <i class="bi bi-boxes me-2 text-success"></i> Check Stock
+                </a>
+                <a asp-page="/Customers/Create" class="list-group-item list-group-item-action">
+                    <i class="bi bi-person-plus me-2 text-info"></i> New Customer
+                </a>
+                <a asp-page="/Reports/Inventory" class="list-group-item list-group-item-action">
+                    <i class="bi bi-graph-up me-2 text-warning"></i> View Reports
+                </a>
+            </div>
         </div>
     </div>
 </div>
+
 <style>
     .stat-card {
         border-radius: 10px;

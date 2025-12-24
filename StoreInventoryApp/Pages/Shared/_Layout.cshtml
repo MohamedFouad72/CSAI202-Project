@@ -8,6 +8,7 @@
     <title>@ViewData["Title"] - Store Inventory</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
@@ -47,9 +48,23 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-page="/Customers/Index">Customers</a>
                             </li>
-                             <li class="nav-item">
-                                <a class="nav-link" asp-page="/Reports/Inventory">Reports</a>
-                            </li>
+                            <!-- بعد Customers مباشرة -->
+<li class="nav-item">
+    <a class="nav-link" asp-page="/Customers/Index">Customers</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" asp-page="/Reports/Index">Reports</a>
+</li>
+<!-- بعد Reports -->
+<li class="nav-item">
+    <a class="nav-link" asp-page="/Deliveries/Index">Deliveries</a>
+</li>
+              <li class="nav-item">
+    <a class="nav-link" asp-page="/Alerts/Index">
+        <i class="bi bi-bell me-1"></i>Alerts
+        <span id="alertCount" class="badge bg-danger d-none">0</span>
+    </a>
+</li>
 
                             @if (role == "Admin" || role == "SubAdmin")
                             {
@@ -105,6 +120,7 @@
     }
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

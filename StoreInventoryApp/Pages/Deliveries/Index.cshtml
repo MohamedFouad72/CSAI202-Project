@@ -1,0 +1,84 @@
+@page
+@model StoreInventoryApp.Pages.Deliveries.IndexModel
+@using System.Data
+@{
+    ViewData["Title"] = "Delivery Tracking";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-truck me-2"></i>Delivery Tracking</h2>
+        <a asp-page="./Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-2"></i>New Delivery
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Invoice</th>
+                            <th>Customer</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Assigned To</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Deliveries != null)
+                        {
+                            @foreach (DataRow row in Model.Deliveries.Rows)
+                            {
+                                var status = row["Status"].ToString();
+                                var statusClass = status switch
+                                {
+                                    "Pending" => "warning",
+                                    "Processing" => "info",
+                                    "OutForDelivery" => "primary",
+                                    "Delivered" => "success",
+                                    "Cancelled" => "danger",
+                                    _ => "secondary"
+                                };
+                                
+                                <tr>
+                                    <td>@row["DeliveryID"]</td>
+                                    <td>@row["InvoiceNumber"]</td>
+                                    <td>@row["CustomerName"]</td>
+                                    <td>@row["Address"]</td>
+                                    <td>
+                                        <span class="badge bg-@statusClass">@status</span>
+                                    </td>
+                                    <td>@row["AssignedTo"]</td>
+                                    <td>@Convert.ToDateTime(row["CreatedAt"]).ToString("MMM dd, yyyy")</td>
+                                    <td>
+                                        <form method="post" class="d-inline">
+                                            <input type="hidden" name="deliveryId" value="@row["DeliveryID"]" />
+                                            <button type="submit" name="status" value="Delivered" 
+                                                    class="btn btn-sm btn-success" 
+                                                    @(status == "Delivered" ? "disabled" : "")>
+                                                <i class="bi bi-check-circle"></i>
+                                            </button>
+                                        </form>
+                                        <a href="#" class="btn btn-sm btn-info">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
