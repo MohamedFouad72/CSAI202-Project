@@ -4,7 +4,7 @@ using Microsoft.Data.SqlClient;
 using StoreInventoryApp.Helpers; // Assuming DbHelper namespace
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-
+#nullable disable
 namespace StoreInventoryApp.Pages.Customers
 {
     public class EditModel : PageModel

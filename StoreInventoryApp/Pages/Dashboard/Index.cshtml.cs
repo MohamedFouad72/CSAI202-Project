@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using StoreInventoryApp.Helpers;
-
+#nullable disable
 namespace StoreInventoryApp.Pages.Dashboard
 {
     public class IndexModel : PageModel
@@ -10,7 +10,7 @@ namespace StoreInventoryApp.Pages.Dashboard
         public IndexModel(IConfiguration configuration) => _configuration = configuration;
 
         // --- ADDED MISSING PROPERTY ---
-        public string StoreName { get; set; }
+        public string StoreName { get; set; } = "Store Overview";
 
         public int TotalProducts { get; set; }
         public int LowStockCount { get; set; }
@@ -21,14 +21,12 @@ namespace StoreInventoryApp.Pages.Dashboard
         public void OnGet()
         {
             // --- POPULATE STORE NAME ---
-            // It tries to grab the name from the session (set during login), 
-            // otherwise defaults to "Store Overview"
             StoreName = HttpContext.Session.GetString("StoreName") ?? "Store Overview";
 
             DbHelper db = new DbHelper(_configuration);
 
             // 1. Total Products
-            TotalProducts = (int)db.ExecuteScalar("SELECT COUNT(*) FROM Products");
+            TotalProducts = (int)db.ExecuteScalar("SELECT COUNT(*) FROM Products WHERE IsDeleted = 0");
 
             // 2. Low Stock
             string lowStockQuery = @"SELECT COUNT(*) FROM Inventory i 

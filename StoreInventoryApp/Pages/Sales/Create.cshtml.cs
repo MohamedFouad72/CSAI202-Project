@@ -3,19 +3,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using StoreInventoryApp.Helpers;
 using System.Data;
-
+#nullable disable
 namespace StoreInventoryApp.Pages.Sales
 {
     public class CreateModel : PageModel
     {
         private readonly IConfiguration _configuration;
         public string ConnectionString { get; private set; }
-
-        public CreateModel(IConfiguration configuration)
-        {
-            _configuration = configuration;
-            ConnectionString = _configuration.GetConnectionString("DefaultConnection");
-        }
 
         public DataTable ProductsList { get; set; }
         public DataTable CustomersList { get; set; }
@@ -36,12 +30,17 @@ namespace StoreInventoryApp.Pages.Sales
             public decimal UnitPrice { get; set; }
         }
 
+        public CreateModel(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            ConnectionString = _configuration.GetConnectionString("DefaultConnection");
+        }
+
         public void OnGet()
         {
             DbHelper db = new DbHelper(_configuration);
-            // Ensuring queries work even if IsActive column is missing in older DB versions
-            ProductsList = db.ExecuteQuery("SELECT * FROM Products");
-            CustomersList = db.ExecuteQuery("SELECT CustomerID, FullName FROM Customers");
+            ProductsList = db.ExecuteQuery("SELECT * FROM Products WHERE IsDeleted = 0");
+            CustomersList = db.ExecuteQuery("SELECT CustomerID, FullName FROM Customers WHERE IsActive = 1");
         }
 
         public IActionResult OnPost()
@@ -49,12 +48,10 @@ namespace StoreInventoryApp.Pages.Sales
             if (CartItems == null || CartItems.Count == 0)
             {
                 ModelState.AddModelError("", "Cart is empty.");
-                // Reload data so the page doesn't crash on return
                 OnGet();
                 return Page();
             }
 
-            // Get UserID from session (default to 1 if testing without login)
             int userId = HttpContext.Session.GetInt32("UserID") ?? 1;
             int storeId = HttpContext.Session.GetInt32("StoreID") ?? 1;
 
@@ -140,7 +137,7 @@ namespace StoreInventoryApp.Pages.Sales
                     {
                         transaction.Rollback();
                         ModelState.AddModelError("", "Transaction Failed: " + ex.Message);
-                        OnGet(); // Reload page data if failed
+                        OnGet();
                         return Page();
                     }
                 }

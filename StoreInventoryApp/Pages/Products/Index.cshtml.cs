@@ -37,8 +37,7 @@ namespace StoreInventoryApp.Pages.Products
             _db.ExecuteNonQuery(query, new SqlParameter[] { new SqlParameter("@ProductID", ProductID) });
 
             TempData["SuccessMessage"] = "Product deleted successfully!";
-            return RedirectToPage(); // Refresh the page
+            return RedirectToPage();
         }
     }
 }
-

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+#nullable disable
 
 namespace StoreInventoryApp.Pages.Auth
 {

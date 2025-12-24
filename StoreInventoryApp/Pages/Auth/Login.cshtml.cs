@@ -1,3 +1,4 @@
+#nullable disable
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
@@ -10,11 +11,7 @@ namespace StoreInventoryApp.Pages.Auth
     public class LoginModel : PageModel
     {
         private readonly DbHelper _db;
-
-        public LoginModel(IConfiguration config)
-        {
-            _db = new DbHelper(config);
-        }
+        public string ErrorMessage { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Username is required")]
@@ -25,11 +22,13 @@ namespace StoreInventoryApp.Pages.Auth
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        public string ErrorMessage { get; set; }
+        public LoginModel(IConfiguration config)
+        {
+            _db = new DbHelper(config);
+        }
 
         public IActionResult OnGet()
         {
-            // If already logged in, redirect to Dashboard
             if (HttpContext.Session.GetInt32("UserID") != null)
             {
                 return RedirectToPage("/Dashboard/Index");
@@ -73,8 +72,8 @@ namespace StoreInventoryApp.Pages.Auth
                     }
 
                     HttpContext.Session.SetInt32("UserID", Convert.ToInt32(row["UserID"]));
-                    HttpContext.Session.SetString("UserName", row["UserName"]?.ToString() ?? "");
-                    HttpContext.Session.SetString("UserRole", row["UserRole"]?.ToString() ?? "");
+                    HttpContext.Session.SetString("UserName", row["UserName"].ToString());
+                    HttpContext.Session.SetString("UserRole", row["UserRole"].ToString());
 
                     if (row["UserEmail"] != DBNull.Value)
                     {
@@ -94,14 +93,14 @@ namespace StoreInventoryApp.Pages.Auth
                     return Page();
                 }
             }
-            catch (SqlException ex)
+            catch (SqlException)
             {
-                ErrorMessage = $"Database error occurred. Please try again later.";
+                ErrorMessage = "Database error occurred. Please try again later.";
                 return Page();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ErrorMessage = $"An unexpected error occurred. Please try again.";
+                ErrorMessage = "An unexpected error occurred. Please try again.";
                 return Page();
             }
         }

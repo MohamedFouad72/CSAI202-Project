@@ -1,26 +1,31 @@
+using Microsoft.AspNetCore.Http;
+using StoreInventoryApp.Extensions;
 using StoreInventoryApp.Helpers;
+using StoreInventoryApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
 
-// Register DbHelper as a singleton or scoped service
+// Register DbHelper as a scoped service
 builder.Services.AddScoped<DbHelper>();
 
+// Register Services
+builder.Services.AddScoped<IInventoryService, InventoryService>();
 
+// Add HttpContextAccessor
 builder.Services.AddHttpContextAccessor();
 
-//[cite_start]// [cite: 298] Add Session Support
+// Add Session
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-
-// Register Configuration for DbHelper
-builder.Configuration.AddJsonFile("appsettings.json");
 
 var app = builder.Build();
 
@@ -36,10 +41,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-//[cite_start]// [cite: 298] Enable Session Middleware
-app.UseSession();
-
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapRazorPages();
 

@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using StoreInventoryApp.Helpers;
 using System.Data;
-
+#nullable disable
 namespace StoreInventoryApp.Pages.Inventory
 {
     public class IndexModel : PageModel
     {
         private readonly DbHelper _db;
-        public DataTable InventoryList { get; set; }
+        public DataTable InventoryList { get; set; } = new();
 
         public IndexModel(DbHelper db)
         {

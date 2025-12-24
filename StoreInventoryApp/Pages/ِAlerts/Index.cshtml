@@ -1,0 +1,80 @@
+@page
+@model StoreInventoryApp.Pages.Alerts.IndexModel
+@using System.Data
+@{
+    ViewData["Title"] = "Alerts & Notifications";
+}
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-warning text-dark">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0"><i class="bi bi-bell me-2"></i>Alerts Center</h4>
+                <div>
+                    <form method="post" class="d-inline">
+                        <button type="submit" name="handler" value="GenerateTestAlerts" 
+                                class="btn btn-sm btn-outline-dark">
+                            <i class="bi bi-plus-circle me-1"></i>Generate Test Alerts
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+            }
+
+            @if (Model.AlertsList != null && Model.AlertsList.Rows.Count > 0)
+            {
+                <div class="list-group">
+                    @foreach (DataRow row in Model.AlertsList.Rows)
+                    {
+                        bool isRead = Convert.ToBoolean(row["IsRead"]);
+                        string alertClass = row["AlertClass"].ToString();
+                        
+                        <div class="list-group-item @(isRead ? "" : "bg-light")">
+                            <div class="d-flex w-100 justify-content-between">
+                                <div>
+                                    <span class="badge bg-@alertClass me-2">@row["AlertType"]</span>
+                                    <h6 class="mb-1 @(isRead ? "" : "fw-bold")">@row["Title"]</h6>
+                                    <p class="mb-1">@row["Message"]</p>
+                                    <small class="text-muted">
+                                        <i class="bi bi-clock me-1"></i>
+                                        @Convert.ToDateTime(row["CreatedAt"]).ToString("MMM dd, yyyy HH:mm")
+                                    </small>
+                                </div>
+                                <div>
+                                    @if (!isRead)
+                                    {
+                                        <form method="post" class="d-inline">
+                                            <input type="hidden" name="alertId" value="@row["AlertID"]" />
+                                            <button type="submit" class="btn btn-sm btn-success" 
+                                                    name="handler" value="MarkAsRead">
+                                                <i class="bi bi-check2"></i> Mark as Read
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">Read</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="bi bi-check2-circle display-1 text-muted"></i>
+                    <h4 class="mt-3">No Active Alerts</h4>
+                    <p class="text-muted">You're all caught up! No new notifications.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
